@@ -1,5 +1,6 @@
 #include "graph.hpp"
 #include <iostream>
+#include <deque>
 Graph::Graph(int num) {
 	vnum=num;
 	arr=new ListNode*[vnum];
@@ -51,4 +52,24 @@ void Graph::printGraph() {
 	std::cout<<std::endl;
 	}
 	}
+bool Graph::isPath (int v1, int v2) {
+	if (arr[v1]==NULL) return false;
+	std::deque<int> myq;
+	myq.push_back(arr[v1]->val);
+	while (!myq.empty()) {
+		int cur=myq.front();
+		if (cur==v2) return true;
+		ListNode* head=arr[cur];
+		while (head) {
+			myq.push_back(head->val);
+			head=head->next;}
+		myq.pop_front();
+		}
+	return false;
+	}
+bool Graph::isConnect(int v1,int v2) {
+	return isPath(v1,v2) || isPath(v2,v1);
+	}
+	
+	
 	
